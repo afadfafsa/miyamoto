@@ -8,7 +8,7 @@ addons:
   apt:
     packages:
       - python3-pyqt5
-      . python3-sip
+      - python3-sip
 
 install:
  - pip install cx_freeze==4.3.3
