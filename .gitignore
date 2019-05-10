@@ -1,0 +1,12 @@
+
+__pycache__/
+.idea/
+build/
+data/
+dist/
+miyamotodata/patches/OtherSMBU/
+*.qpp
+*.spec
+build.bat
+dlls.zip
+log.txt

@@ -1,0 +1,9 @@
+language: python
+
+python:
+  - "3.4"
+install:
+ - pip install cx_freeze==4.3.3
+ - pip install libyaz0
+ - pip install sarclib
+ - pip install pyqt5
