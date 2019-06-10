@@ -21,8 +21,3 @@ install:
 
 script:
  - python build.py
-
-
-language: python
-
-
