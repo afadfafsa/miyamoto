@@ -1,16 +1,10 @@
 language: python
 
 python:
-  - "3.4"
+  - "3.5"
   
-  
-addons:
-  apt:
-    packages:
-      - python3-pyqt5
-      - python3-sip
-
 install:
+ - pip install git+git://github.com/pyqt/python-qt5.git
  - pip install cx_freeze==4.3.3
  - pip install libyaz0
  - pip install sarclib
