@@ -12,7 +12,6 @@ addons:
       - python3-pip
 
 install:
- - pip install https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.3.1/PyQt-gpl-5.3.1.tar.gz/download
  - pip install cx_freeze==4.3.3
  - pip install libyaz0
  - pip install sarclib
