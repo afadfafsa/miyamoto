@@ -4,7 +4,7 @@ python:
   - "3.4"
 
 install:
- - pip install https://master.dl.sourceforge.net/project/pyqt/PyQt5/PyQt-5.3/PyQt-gpl-5.3.tar.gz
+ - pip install https://sourceforge.net/projects/pyqt/files/PyQt5/PyQt-5.3.1/PyQt-gpl-5.3.1.tar.gz/download
  - pip install cx_freeze==4.3.3
  - pip install libyaz0
  - pip install sarclib
