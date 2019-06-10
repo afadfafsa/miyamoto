@@ -10,6 +10,7 @@ addons:
       - python3-pyqt5
 
 install:
+ - pip install python-qt5
  - pip install cx_freeze==4.3.3
  - pip install libyaz0
  - pip install sarclib
