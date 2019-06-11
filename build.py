@@ -109,7 +109,6 @@ else:
     if os.path.isdir(dir_ + '/macTools'): shutil.rmtree(dir_ + '/macTools') 
     shutil.copytree('macTools', dir_ + '/macTools')
 shutil.copy('license.txt', dir_)
-shutil.copy('README.md', dir_)
 print('>> Files copied!')
 
 print('>> Miyamoto! has been frozen to %s !' % dir_)
