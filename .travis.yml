@@ -5,7 +5,7 @@ python:
 
 deploy:
   provider: releases
-  api_key: "5ed7a878a7c64fee08c5b9103b1d6f8a3c688c8f"
+  api_key: "5f90f628aa88e63d7471b27369295c4acaa3d3a1"
   file: "distrib"
   skip_cleanup: true
   draft: true
