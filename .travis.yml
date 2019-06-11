@@ -8,6 +8,7 @@ install:
  - pip install libyaz0
  - pip install sarclib
  - pip install pyqt5
+ - pip install sip
  
 script:
  - python build.py
