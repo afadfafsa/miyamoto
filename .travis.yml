@@ -2,7 +2,15 @@ language: python
 
 python:
   - "3.5"
-  
+
+deploy:
+  provider: releases
+  api_key: "5ed7a878a7c64fee08c5b9103b1d6f8a3c688c8f"
+  file: "distrib"
+  skip_cleanup: true
+  on:
+    tags: true
+
 install:
  - pip install cx_freeze==4.3.3
  - pip install libyaz0
