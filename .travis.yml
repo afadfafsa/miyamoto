@@ -9,6 +9,8 @@ deploy:
   file: "distrib"
   skip_cleanup: true
   draft: true
+  on:
+    tags: false
 
 install:
  - pip install cx_freeze==4.3.3
