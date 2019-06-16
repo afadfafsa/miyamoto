@@ -6,7 +6,8 @@ python:
 deploy:
   provider: releases
   api_key: ${api_key}
-  file: "distrib"
+  file_glob: true
+  file: distrib/*
   skip_cleanup: true
   draft: true
   on:
