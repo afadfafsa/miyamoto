@@ -11,7 +11,7 @@ deploy:
   draft: true
   on:
     all_branches: true
-    tags: true
+    tags: false
 
 install:
  - pip install cx_freeze==4.3.3
