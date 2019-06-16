@@ -7,7 +7,7 @@ deploy:
   provider: releases
   api_key: ${api_key}
   file_glob: true
-  file: distrib/miyamoto_v26.0/**/*
+  file: distrib/miyamoto_v26.0/*
   skip_cleanup: true
   draft: true
   on:
