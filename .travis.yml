@@ -2,7 +2,28 @@ matrix:
   include:
     - os: windows
       language: sh
-      python: "3.7"
+      python: "3.5"
       before_install:
         - choco install python3
         - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
+deploy:
+  provider: releases
+  api_key: ${api_key}
+  file_glob: true
+  file: distrib/*
+  skip_cleanup: true
+  draft: true
+  on:
+    all_branches: true
+    tags: false
+
+install:
+ - pip install cx_freeze==4.3.3
+ - pip install libyaz0
+ - pip install sarclib
+ - pip install pyqt5
+ - pip install sip
+ 
+script:
+- python build.py
+   
