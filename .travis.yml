@@ -4,8 +4,8 @@ matrix:
       language: sh
       python: "3.5"
       before_install:
-        - choco install python3
-        - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
+        - choco install python --version 3.5.1.20161002 
+        - export PATH="/c/Python35:/c/Python35/Scripts:$PATH"
 deploy:
   provider: releases
   api_key: ${api_key}
