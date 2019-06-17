@@ -34,7 +34,7 @@ Version = MiyamotoVersion
 ################################################################
 
 # Imports
-import os, os.path, platform, shutil, sys
+import os, os.path, platform, shutil, sys, zipfile
 from cx_Freeze import setup, Executable
 
 # Pick a build directory
@@ -112,3 +112,12 @@ shutil.copy('license.txt', dir_)
 print('>> Files copied!')
 
 print('>> Miyamoto! has been frozen to %s !' % dir_)
+
+zf = zipfile.ZipFile(PackageName + ".zip", "w", zipfile.ZIP_DEFLATED)
+for dirname, subdirs, files in os.walk(dir_):
+    zf.write(dirname)
+    for filename in files:
+        os.path.abspath(os.path.join(dirname, filename))
+        zf.write(os.path.join(dirname, filename))
+zf.close()
+print('Miyamoto! has been packed as zip')
