@@ -36,6 +36,7 @@ Version = MiyamotoVersion
 # Imports
 import os, os.path, platform, shutil, sys, zipfile
 from cx_Freeze import setup, Executable
+from shutil import copyfile
 
 # Pick a build directory
 dir_ = 'distrib/' + PackageName
@@ -121,3 +122,4 @@ for dirname, subdirs, files in os.walk(dir_):
         zf.write(os.path.join(dirname, filename))
 zf.close()
 print('Miyamoto! has been packed as zip')
+shutil.copy(PackageName + ".zip", "distrib")
