@@ -1,42 +1,61 @@
-language: python
-dist: xenial
+# https://blog.travis-ci.com/2018-10-11-windows-early-release
+# https://docs.travis-ci.com/user/reference/windows
+# https://chocolatey.org/packages/python
+os: windows   # Windows Server, version 1803
+language: sh  # 'language: python' is not yet supported
 
-env:
-  global:
-    secure: "d2LR/WLe9ZragzMEXGGjkFGoPiVm8ilCc41CEhnsJNRUzDo5crfZY1OTzE45CIx3kpVYgUNUveb37Q2WMYI9X7xJp4gY+gxEOWG4EMefkXu2IwUBzwKaqA0oU1pYcnm5FlU8MoBL3HBWagTvGG7Q90YR4s/78HJTDrwHjTAlZctyh5O89vHq8yjDDa/FIwEytns3U8FsVp5IGe+vvDBsbrlFgW0kGG2ayc2bO0i9wof0RF9J7gre5zrKg9h80AHxbmprZ9hhjsYPj3cgEniaQn5dFxf7k3YfkPMvr2h9HHdHPucF+KRiux2/UvQ/CPeSpZGmcC+YzHcgliKK/bkl2MHZDQJ78V+vhJKchbZ+3iVyuFYbhggE5nmUjDMpthnfhraGGIPc9ZYwwKTYhLMc2AlcBLu3+cLAAcCT7gl4ArZQT6+1jXrMApulPIHqxsnxwTKxBPyuq0M7w5TJJMpgXGy4l5xUO/z8FYAQ1+rBHif3Sy36Sh2w0cAAKCz46dow5ZdpXhxUurA9VeCkQRb0D/fg59N/KoAnsjbbbgUyg3zjsxF8OiLMqyOTnagecFzCMUjT8yT0cknEz8oCwznEbP3seqzGevTzmC8yXXAhAFeaGwdh8t7WkOT5I50cOZ+bNgnyi1nsiEBzaGDNEVtd+uI91Ij5GTT54ZRoXBxaS0k="
+py27-steps: &py27-steps
+  env: PATH=/c/Python27:/c/Python27/Scripts:$PATH
+  before_install:
+    - choco install python2
+    - python -m pip install --upgrade pip
+
+py35-steps: &py35-steps
+  env: PATH=/c/Python35:/c/Python35/Scripts:$PATH
+  before_install:
+    - choco install python --version 3.5.4
+    - python -m pip install --upgrade pip
+
+py36-steps: &py36-steps
+  env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
+  before_install:
+    - choco install python --version 3.6.8
+    - python -m pip install --upgrade pip
+
+py37-steps: &py37-steps
+  env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+  before_install:
+    - choco install python
+    - python -m pip install --upgrade pip
 
 matrix:
-  fast_finish: true
-  include:
-    - python: 3.6
-      env: TOXENV=py36
-    - python: 3.6
-      env: TOXENV=INTEGRATION
-    - python: 3.6
-      env: TOXENV=doc_build
-    - python: 3.6
-      env: TOXENV=lint
-    - python: 3.7
-      env: TOXENV=py37
-    - python: 3.8-dev
-      env: TOXENV=py38
   allow_failures:
-    - env: TOXENV=py38
-
+    - python: 2.7  # It is legacy Python after all...
+    - python: 3.5  # f-strings are available on Python >= 3.6
+  include:
+    - name: "Python 2.7: Run tests"
+      <<: *py27-steps
+    - name: "Python 3.5: Run tests"
+      <<: *py35-steps
+    - name: "Python 3.6: Run tests"
+      <<: *py36-steps
+    - name: "Python 3.7: Run tests"
+      <<: *py37-steps
 install:
-    - pip install --upgrade pip setuptools
-    - pip install -r requirements.txt -r requirements_test.txt
-    - pip install .
-
+  #- pip install -r requirements.txt
+  - pip install flake8  # pytest  # add other testing frameworks later
 script:
-    - python test_runner.py
-
+  - PYVER="import sys ; print('py{}{}'.format(*sys.version_info))"
+  - TOXENV=${TOXENV:-$(python -c "$PYVER")}  # Longwinded...
+  - TOXENV=${TOXENV:-"py$(echo $TRAVIS_JOB_NAME | tr -d -c 0-9)"}  # Sensitive to 'name:'
+  - TOXENV=${TOXENV:-"py$(echo $TRAVIS_PYTHON_VERSION | tr -d -c 0-9)"}  # Linux only
+  - echo "TOXENV is $TOXENV"
+  - flake8 --version
+  - echo stop the build if there are Python syntax errors or undefined names
+  - echo ; echo -n "flake8 testing on " ; python --version
+  - flake8 . --count --select=E9,F401,F63,F72,F82 --show-source --statistics
+  - echo exit-zero treats all errors as warnings.  The GitHub editor is 127 chars wide
+  - flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+  #- true  # pytest --capture=sys
 notifications:
-  irc:
-    channels:
-      - "chat.freenode.net#bandersnatch"
-
-cache:
-    directories:
-        - $HOME/.cache/pip
-        - $HOME/.cache/pre-commit
+email: false
